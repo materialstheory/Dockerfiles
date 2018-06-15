@@ -24,7 +24,7 @@ LIBDIR     = /usr/lib/x86_64-linux-gnu
 
 LLIBS =   -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl
 
-INCS       = -I/usr/include -I${MKLROOT}/include
+INCS       = -I/usr/include -I${MKLROOT}/include -I${MKLROOT}/include/fftw
 
 OBJECTS    = fftmpiw.o fftmpi_map.o  fftw3d.o  fft3dlib.o 
 
