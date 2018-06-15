@@ -2,10 +2,10 @@ FROM ubuntu:16.04
 
 RUN apt-get update && apt-get install -y \
         apt-transport-https \
-        build-essential \
+        build-essential=12.1ubuntu2 \
         ca-certificates \
         curl \
-        gfortran \
+        gfortran=4:5.3.1-1ubuntu1 \
         openssl \
         rsync \
         wget \
