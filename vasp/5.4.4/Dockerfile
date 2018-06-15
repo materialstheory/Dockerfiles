@@ -3,7 +3,7 @@ FROM materialstheory/base-gnu
 ADD vasp.5.4.4.tar.gz /software/vasp/
 ADD makefile.include /software/vasp/vasp.5.4.4/
 RUN  cd /software/vasp/vasp.5.4.4/ \
-     && make std \
+     && make all \
      && rm -rf src/ build/ arch/
 
 ENV PATH=/software/vasp/vasp.5.4.4/bin:${PATH}
