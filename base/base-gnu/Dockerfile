@@ -1,0 +1,41 @@
+FROM ubuntu:16.04
+
+RUN apt-get update && apt-get install -y \
+        apt-transport-https \
+        build-essential \
+        ca-certificates \
+        curl \
+        gfortran \
+        openssl \
+        rsync \
+        wget \
+        --no-install-recommends     \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB \
+    | apt-key add - \
+    && echo "deb https://apt.repos.intel.com/mkl all main" > /etc/apt/sources.list.d/intel-mkl.list \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends intel-mkl-2018.3-051 \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN cd && wget -q http://www.mpich.org/static/downloads/3.1.4/mpich-3.1.4.tar.gz \
+    && tar xf mpich-3.1.4.tar.gz \
+    && cd mpich-3.1.4 \
+    && ./configure --enable-fast=all,O3 --prefix=/usr \
+    && make -j$(nproc) \
+    && make install \
+    && ldconfig \
+    && cd .. \
+    && rm -rf mpich-3.1.4 \
+    && rm mpich-3.1.4.tar.gz
+
+ENV INTELPATH=/opt/intel/compilers_and_libraries_2018.3.222/linux
+ENV MKLROOT=${INTELPATH}/mkl
+ENV INTEL_LICENSE_FILE=${INTELPATH}/licenses:/opt/intel/licenses:/root/intel/licenses
+ENV LIBRARY_PATH=${INTELPATH}/tbb/lib/intel64_lin/gcc4.7:${INTELPATH}/compiler/lib/intel64_lin:${INTELPATH}/mkl/lib/intel64_lin
+ENV LD_LIBRARY_PATH=${INTELPATH}/compiler/lib/intel64:${INTELPATH}/compiler/lib/intel64_lin:${INTELPATH}/tbb/lib/intel64_lin/gcc4.7:${INTELPATH}/compiler/lib/intel64_lin:${INTELPATH}/mkl/lib/intel64_lin
+ENV CPATH=${INTELPATH}/mkl/include
+ENV NLSPATH=${INTELPATH}/compiler/lib/intel64/locale/%l_%t/%N:${INTELPATH}/mkl/lib/intel64_lin/locale/%l_%t/%N
+ENV PATH=${INTELPATH}/bin/intel64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV PKG_CONFIG_PATH=${INTELPATH}/mkl/bin/pkgconfig
