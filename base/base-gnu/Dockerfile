@@ -33,12 +33,12 @@ RUN cd && wget -q http://www.mpich.org/static/downloads/3.1.4/mpich-3.1.4.tar.gz
     && rm mpich-3.1.4.tar.gz
 
 # Set paths for intel libraries, so that we can use them during docker build
-ENV INTELPATH=/opt/intel/compilers_and_libraries_2018.3.222/linux
-ENV MKLROOT=${INTELPATH}/mkl
-ENV INTEL_LICENSE_FILE=${INTELPATH}/licenses:/opt/intel/licenses:/root/intel/licenses
-ENV LIBRARY_PATH=${INTELPATH}/tbb/lib/intel64_lin/gcc4.7:${INTELPATH}/compiler/lib/intel64_lin:${INTELPATH}/mkl/lib/intel64_lin
-ENV LD_LIBRARY_PATH=${INTELPATH}/compiler/lib/intel64:${INTELPATH}/compiler/lib/intel64_lin:${INTELPATH}/tbb/lib/intel64_lin/gcc4.7:${INTELPATH}/compiler/lib/intel64_lin:${INTELPATH}/mkl/lib/intel64_lin
-ENV CPATH=${INTELPATH}/mkl/include
-ENV NLSPATH=${INTELPATH}/compiler/lib/intel64/locale/%l_%t/%N:${INTELPATH}/mkl/lib/intel64_lin/locale/%l_%t/%N
-ENV PATH=${INTELPATH}/bin/intel64:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-ENV PKG_CONFIG_PATH=${INTELPATH}/mkl/bin/pkgconfig
+ENV INTELPATH           /opt/intel/compilers_and_libraries_2018.3.222/linux
+ENV MKLROOT             ${INTELPATH}/mkl
+ENV INTEL_LICENSE_FILE  ${INTELPATH}/licenses:/opt/intel/licenses:/root/intel/licenses
+ENV LIBRARY_PATH        ${INTELPATH}/tbb/lib/intel64_lin/gcc4.7:${INTELPATH}/compiler/lib/intel64_lin:${INTELPATH}/mkl/lib/intel64_lin
+ENV LD_LIBRARY_PATH     ${INTELPATH}/compiler/lib/intel64:${INTELPATH}/compiler/lib/intel64_lin:${INTELPATH}/tbb/lib/intel64_lin/gcc4.7:${INTELPATH}/compiler/lib/intel64_lin:${INTELPATH}/mkl/lib/intel64_lin
+ENV CPATH               ${INTELPATH}/mkl/include
+ENV NLSPATH             ${INTELPATH}/compiler/lib/intel64/locale/%l_%t/%N:${INTELPATH}/mkl/lib/intel64_lin/locale/%l_%t/%N
+ENV PATH                ${INTELPATH}/bin/intel64:${PATH}
+ENV PKG_CONFIG_PATH     ${INTELPATH}/mkl/bin/pkgconfig
