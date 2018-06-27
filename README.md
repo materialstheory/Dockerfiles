@@ -5,6 +5,7 @@ This repository contains the dockerfiles we use to build DFT codes for use on su
 ## Applications
 Dockerfiles for the following codes are available:
 - VASP: 5.4.4 and 5.4.4 with GPU support (Note that you need a valid license to build the image.)
+- Quantum ESPRESSO: 6.2.0
 
 ## `base` images
 The `base` images provide a reproducible environment to compile applications with specific versions of compilers, libraries and MPI.
