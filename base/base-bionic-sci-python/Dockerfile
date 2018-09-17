@@ -1,21 +1,21 @@
 FROM materialstheory/base-bionic-gnu
 
-# needed python packages that dont need manual installation
-RUN pip install cython matplotlib mpi4py
+# need cython
+RUN pip install cython
 
 # Numpy
-RUN cd && git clone --branch v1.15.1 https://github.com/numpy/numpy.git numpy \
-    && cd numpy \
-    && python setup.py build \
-    && pip install . \
+RUN cd && git clone --branch v1.15.1 https://github.com/numpy/numpy.git numpy
+ADD site.cfg /root/numpy/site.cfg
+RUN cd /root/numpy/ \
+    && python setup.py install \
     && cd .. \
     && rm -rf numpy
 
 # Scipy
-RUN cd && git clone --branch v1.1.0  https://github.com/scipy/scipy.git scipy \
-    && cd scipy \
-    && python setup.py build \
-    && pip install . \
+RUN cd && git clone --branch v1.1.0  https://github.com/scipy/scipy.git scipy
+ADD site.cfg /root/scipy/site.cfg
+RUN cd /root/scipy/ \
+    && python setup.py install \
     && cd .. \
     && rm -rf scipy
 
@@ -38,3 +38,6 @@ RUN cd && wget -q https://files.pythonhosted.org/packages/74/5d/6f11a5fffc3d8884
     && cd .. \
     && rm -rf h5py-2.8.0 \
     && rm h5py-2.8.0.tar.gz
+
+# needed python packages that dont need manual installation
+RUN pip install matplotlib mpi4py
