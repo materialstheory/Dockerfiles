@@ -1,10 +1,10 @@
-FROM materialstheory/base-bionic-sci-python
+FROM base-bionic-sci-python
 
 # set some compiler flags
-ENV CFLAGS="-fopenmp -m64 -mtune=native -O3 -Wl,--no-as-needed"
-ENV CXXFLAGS="-fopenmp -m64 -mtune=native -O3 -Wl,--no-as-needed"
+ENV CFLAGS="-m64 -O3 -Wl,--no-as-needed"
+ENV CXXFLAGS="-m64 -O3 -Wl,--no-as-needed"
 ENV LDFLAGS="-ldl -lm"
-ENV FFLAGS="-fopenmp -m64 -mtune=native -O3"
+ENV FFLAGS="-m64 -O3"
 
 # triqs
 RUN cd / && mkdir -p triqs && mkdir -p source
@@ -23,8 +23,8 @@ ENV CPATH=/triqs/include:${CPATH} \
 
 RUN cd /source && git clone https://github.com/TRIQS/triqs triqs.src \
     && mkdir -p triqs.build && cd triqs.build \
-    && cmake ../triqs.src -DCMAKE_INSTALL_PREFIX=/triqs \
-    && make && make install
+    && cmake ../triqs.src -DCMAKE_INSTALL_PREFIX=/triqs -DLAPACK_LIBS=/opt/intel/compilers_and_libraries_2018.3.222/linux/mkl/lib/intel64_lin/libmkl_rt.so \
+    && make -j$(nproc) && make install
 
 ENV TRIQS_ROOT=/triqs
 
@@ -38,10 +38,13 @@ RUN cd /source && git clone https://github.com/TRIQS/dft_tools.git dft_tools.src
 RUN cd /source && git clone https://github.com/TRIQS/cthyb.git cthyb.src \
     && mkdir -p cthyb.build && cd cthyb.build \
     && cmake ../cthyb.src -DCMAKE_INSTALL_PREFIX=/triqs \
-    && make && make install
+    && make -j$(nproc) && make install
 
 # remove source
 RUN cd / && rm -rf source
 
 # create a useful work dir
 RUN cd / && mkdir work && cd work
+
+# make sure openmp does not start
+ENV OMP_NUM_THREADS=1
