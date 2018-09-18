@@ -1,4 +1,4 @@
-FROM base-bionic-sci-python
+FROM materialstheory/base-bionic-sci-python
 
 # set some compiler flags
 ENV CFLAGS="-m64 -O3 -Wl,--no-as-needed"
