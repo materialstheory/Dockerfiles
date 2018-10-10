@@ -40,6 +40,12 @@ RUN cd /source && git clone https://github.com/TRIQS/cthyb.git cthyb.src \
     && cmake ../cthyb.src -DCMAKE_INSTALL_PREFIX=/triqs \
     && make -j$(nproc) && make install
 
+# maxent
+RUN cd /source && git clone https://github.com/TRIQS/maxent.git maxent.src \
+    && mkdir -p maxent.build && cd maxent.build \
+    && cmake ../maxent.src -DCMAKE_INSTALL_PREFIX=/triqs \
+    && make -j$(nproc) && make install
+    
 # remove source
 RUN cd / && rm -rf source
 
@@ -48,3 +54,12 @@ RUN cd / && mkdir work && cd work
 
 # make sure openmp does not start
 ENV OMP_NUM_THREADS=1
+
+# expose port for jupyter
+EXPOSE 8378
+
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY jupyter_start.sh /usr/local/bin/jupyter.sh
+
+# change user and group id to match host machine if options are passed accordingly
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
