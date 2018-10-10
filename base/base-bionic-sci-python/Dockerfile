@@ -40,4 +40,4 @@ RUN cd && wget -q https://files.pythonhosted.org/packages/74/5d/6f11a5fffc3d8884
     && rm h5py-2.8.0.tar.gz
 
 # needed python packages that dont need manual installation
-RUN pip install --no-cache-dir matplotlib mpi4py decorator ipywidgets notebook==5.* ipython==5.* ipykernel==4.*
+RUN pip install --no-cache-dir matplotlib mpi4py decorator jupyter ipywidgets jupyterlab 
