@@ -4,7 +4,8 @@ FROM materialstheory/base-bionic-gnu
 RUN pip install cython
 
 # Numpy
-RUN cd && git clone --branch v1.13.3 https://github.com/numpy/numpy.git numpy
+RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
+RUN cd && git clone --branch v1.11.3 https://github.com/numpy/numpy.git numpy
 ADD site.cfg /root/numpy/site.cfg
 RUN cd /root/numpy/ \
     && python setup.py install \
@@ -54,7 +55,7 @@ RUN cd / && mkdir -p triqs && mkdir -p source
 RUN cd /source && git clone -b 1.4.2 https://github.com/TRIQS/triqs triqs.src \
     && mkdir -p triqs.build && cd triqs.build \
     && cmake ../triqs.src -DCMAKE_INSTALL_PREFIX=/triqs -DLAPACK_LIBS=/opt/intel/compilers_and_libraries_2018.3.222/linux/mkl/lib/intel64_lin/libmkl_rt.so \
-    && make -j$(nproc) &&  make install
+    && make -j$(nproc) && make -j$(nproc) test  && make install
 
 ENV TRIQS_ROOT=/triqs
 
@@ -69,13 +70,13 @@ ENV CPATH=/triqs/include:${CPATH} \
 RUN cd /source && git clone -b 1.4 https://github.com/TRIQS/dft_tools.git dft_tools.src \
     && mkdir -p dft_tools.build && cd dft_tools.build \
     && cmake ../dft_tools.src -DTRIQS_PATH=/triqs \
-    && make -j$(nproc) && make install
+    && make -j$(nproc) && make -j$(nproc) test  && make install
 
 # cthyb
 RUN cd /source && git clone -b 1.4.2 https://github.com/TRIQS/cthyb.git cthyb.src \
     && mkdir -p cthyb.build && cd cthyb.build \
     && cmake ../cthyb.src -DTRIQS_PATH=/triqs \
-    && make -j$(nproc) && make install
+    && make -j$(nproc) && make -j$(nproc) test  && make install
 
 # remove source
 RUN cd / && rm -rf source
