@@ -21,7 +21,7 @@ ENV CPATH=/triqs/include:${CPATH} \
     PYTHONPATH=/triqs/lib/python2.7/site-packages:${PYTHONPATH} \
     CMAKE_PREFIX_PATH=/triqs/share/cmake:${CMAKE_PREFIX_PATH}
 
-RUN cd /source && git clone https://github.com/TRIQS/triqs triqs.src \
+RUN cd /source && git clone -b 2.1.0 https://github.com/TRIQS/triqs triqs.src \
     && mkdir -p triqs.build && cd triqs.build \
     && cmake ../triqs.src -DCMAKE_INSTALL_PREFIX=/triqs -DLAPACK_LIBS=/opt/intel/compilers_and_libraries_2018.3.222/linux/mkl/lib/intel64_lin/libmkl_rt.so \
     && make -j$(nproc) && make install
@@ -29,13 +29,13 @@ RUN cd /source && git clone https://github.com/TRIQS/triqs triqs.src \
 ENV TRIQS_ROOT=/triqs
 
 # dft_tools
-RUN cd /source && git clone https://github.com/TRIQS/dft_tools.git dft_tools.src \
+RUN cd /source && git clone -b 2.1.0 https://github.com/TRIQS/dft_tools.git dft_tools.src \
     && mkdir -p dft_tools.build && cd dft_tools.build \
     && cmake ../dft_tools.src -DCMAKE_INSTALL_PREFIX=/triqs \
     && make && make install
 
 # cthyb
-RUN cd /source && git clone https://github.com/TRIQS/cthyb.git cthyb.src \
+RUN cd /source && git clone -b 2.1.0 https://github.com/TRIQS/cthyb.git cthyb.src \
     && mkdir -p cthyb.build && cd cthyb.build \
     && cmake ../cthyb.src -DCMAKE_INSTALL_PREFIX=/triqs \
     && make -j$(nproc) && make install
