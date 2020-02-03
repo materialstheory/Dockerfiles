@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 # get essential packages
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends software-properties-common apt-transport-https curl build-essential ca-certificates curl openssl rsync wget cmake g++ gfortran git libgfortran3 libgmp-dev python-dev clang libclang-dev sudo openssh-client gpg-agent python-pip python-setuptools python-configparser python-jinja2 python-mako python-tornado python-zmq python-notebook libfftw3-dev binutils libnfft3-dev python-backports-shutil-get-terminal-size zlib1g-dev less nano vim\
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends software-properties-common apt-transport-https curl build-essential ca-certificates curl openssl rsync wget cmake g++ gfortran git libgfortran3 libgmp-dev python-dev clang libclang-dev sudo openssh-client gpg-agent python-pip python-setuptools python-configparser python-jinja2 python-mako python-tornado python-zmq python-notebook libfftw3-dev binutils libnfft3-dev python-backports-shutil-get-terminal-size python-backports.functools-lru-cache python-tk zlib1g-dev less nano vim\
     && \
     apt-get autoremove --purge -y && \
     apt-get autoclean -y && \
