@@ -16,7 +16,7 @@ RUN curl https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCT
     | apt-key add - \
     && echo "deb https://apt.repos.intel.com/mkl all main" > /etc/apt/sources.list.d/intel-mkl.list \
     && apt-get update \
-    && apt-get install -y --no-install-recommends intel-mkl-2018.3-051 \
+    && apt-get install -y --no-install-recommends intel-mkl-2019.4-070 \
     && rm -rf /var/lib/apt/lists/*
 
 # MPICH 3.1.4
@@ -32,7 +32,7 @@ RUN cd && wget -q http://www.mpich.org/static/downloads/3.1.4/mpich-3.1.4.tar.gz
     && rm mpich-3.1.4.tar.gz
 
 # Set paths for intel libraries, so that we can use them during docker build
-ENV INTELPATH           /opt/intel/compilers_and_libraries_2018.3.222/linux
+ENV INTELPATH           /opt/intel/compilers_and_libraries_2019.4.243/linux
 ENV MKLROOT             ${INTELPATH}/mkl
 ENV INTEL_LICENSE_FILE  ${INTELPATH}/licenses:/opt/intel/licenses:/root/intel/licenses
 ENV LIBRARY_PATH        ${INTELPATH}/tbb/lib/intel64_lin/gcc4.7:${INTELPATH}/compiler/lib/intel64_lin:${INTELPATH}/mkl/lib/intel64_lin:${LIBRARY_PATH}

@@ -4,7 +4,7 @@ FROM materialstheory/base-bionic-gnu
 RUN pip install cython
 
 # Numpy
-RUN cd && git clone --branch v1.15.1 https://github.com/numpy/numpy.git numpy
+RUN cd && git clone --branch v1.16.5 https://github.com/numpy/numpy.git numpy
 ADD site.cfg /root/numpy/site.cfg
 RUN cd /root/numpy/ \
     && python setup.py install \
@@ -12,7 +12,7 @@ RUN cd /root/numpy/ \
     && rm -rf numpy
 
 # Scipy
-RUN cd && git clone --branch v1.1.0  https://github.com/scipy/scipy.git scipy
+RUN cd && git clone --branch v1.2.2  https://github.com/scipy/scipy.git scipy
 ADD site.cfg /root/scipy/site.cfg
 RUN cd /root/scipy/ \
     && python setup.py install \
@@ -40,4 +40,4 @@ RUN cd && wget -q https://files.pythonhosted.org/packages/74/5d/6f11a5fffc3d8884
     && rm h5py-2.8.0.tar.gz
 
 # needed python packages that dont need manual installation
-RUN pip install --no-cache-dir matplotlib mpi4py decorator jupyter ipywidgets jupyterlab 
+RUN pip install --no-cache-dir matplotlib mpi4py decorator jupyter ipywidgets jupyterlab pytest npm pandas shapely monty==1.0.6 pymatgen==2018.12.12
